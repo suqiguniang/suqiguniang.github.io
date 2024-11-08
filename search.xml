@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>docker-备份</title>
+    <url>/2024/11/06/docker-%E5%A4%87%E4%BB%BD/</url>
+    <content><![CDATA[<h1 id="docker-备份"><a href="#docker-备份" class="headerlink" title="docker 备份"></a>docker 备份</h1><h2 id="aria2-pro"><a href="#aria2-pro" class="headerlink" title="aria2-pro"></a>aria2-pro</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">    --name aria2-pro \</span><br><span class="line">    --restart unless-stopped \</span><br><span class="line">    --log-opt max-size=1m \</span><br><span class="line">    -e PUID=$UID \</span><br><span class="line">    -e PGID=$GID \</span><br><span class="line">    -e RPC_PORT=6800 \</span><br><span class="line">    -p 6800:6800 \</span><br><span class="line">    -e LISTEN_PORT=6888 \</span><br><span class="line">    -p 6888:6888 \</span><br><span class="line">    -p 6888:6888/udp \</span><br><span class="line">    -v /vol1/@appmeta/1panel/aria2-pro:/config \</span><br><span class="line">    -v /vol2/1000/sata/downloads:/downloads \</span><br><span class="line">    -v /vol2/1000/sata:/completed \</span><br><span class="line">    p3terx/aria2-pro</span><br></pre></td></tr></table></figure>
+<p>关键配置文件：<a href="https://suqiguniang.github.io/others/others/aria2.conf">aria2.conf</a>（必须） <a href="https://suqiguniang.github.io/others/others/move.sh">move.sh</a>（可选）</p>
+<h2 id="clash"><a href="#clash" class="headerlink" title="clash"></a>clash</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">  --name clash \</span><br><span class="line">  --restart=always \</span><br><span class="line">  --log-opt max-size=1m \</span><br><span class="line">  -v /vol1/@appmeta/1panel/clash/clash.yaml:/root/.config/clash/config.yaml \</span><br><span class="line">  -p 9090:8080 -p 7890:7890 \</span><br><span class="line">  laoyutang/clash-and-dashboard:latest</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="speedtest"><a href="#speedtest" class="headerlink" title="speedtest"></a>speedtest</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">  --name speedtest \</span><br><span class="line">  --restart=always \</span><br><span class="line">  -p 40080:80  \</span><br><span class="line">  ghcr.io/librespeed/speedtest:latest</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="natfrp"><a href="#natfrp" class="headerlink" title="natfrp"></a>natfrp</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run \</span><br><span class="line">   -d \</span><br><span class="line">   --network=host \</span><br><span class="line">   --restart=on-failure:5 \</span><br><span class="line">   --pull=always \</span><br><span class="line">   --name=natfrp-service \</span><br><span class="line">   -e &quot;NATFRP_TOKEN=&lt;访问密钥&gt;&quot; \</span><br><span class="line">   -e &quot;NATFRP_REMOTE=&lt;设定一个远程管理密码，最少8个字符&gt;&quot; \</span><br><span class="line">   natfrp.com/launcher</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="artalk"><a href="#artalk" class="headerlink" title="artalk"></a>artalk</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">    --name artalk \</span><br><span class="line">    -p 23366:23366 \</span><br><span class="line">    -v /vol1/@appmeta/1panel/artalk:/data \</span><br><span class="line">    -e &quot;TZ=Asia/Shanghai&quot; \</span><br><span class="line">    -e &quot;ATK_LOCALE=zh-CN&quot; \</span><br><span class="line">    -e &quot;ATK_SITE_DEFAULT=柒柒的Artalk&quot; \</span><br><span class="line">    -e &quot;ATK_SITE_URL=http://192.168.1.10:23366&quot; \</span><br><span class="line">    artalk/artalk-go</span><br></pre></td></tr></table></figure>
+<p>执行命令创建管理员账户：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker exec -it artalk artalk admin</span><br></pre></td></tr></table></figure>
+<h2 id="Arya-在线-Markdown-编辑器"><a href="#Arya-在线-Markdown-编辑器" class="headerlink" title="Arya - 在线 Markdown 编辑器"></a>Arya - 在线 Markdown 编辑器</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -d -p 8866:80 nicejade/markdown-online-editor:latest</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="vocechat-server-云社交媒体聊天服务"><a href="#vocechat-server-云社交媒体聊天服务" class="headerlink" title="vocechat-server 云社交媒体聊天服务"></a>vocechat-server 云社交媒体聊天服务</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -d --restart=always \</span><br><span class="line">  -p 3009:3000 \</span><br><span class="line">  --name vocechat-server \</span><br><span class="line">  -v /vol1/@appmeta/1panel/vocechat-server/data:/home/vocechat-server/data \</span><br><span class="line">  privoce/vocechat-server:latest \</span><br></pre></td></tr></table></figure>]]></content>
+  </entry>
+  <entry>
+    <title>重启 fnOS 系统后面板无法访问</title>
+    <url>/2024/11/06/fnos-1panel/</url>
+    <content><![CDATA[<h1 id="重启-fnOS-系统后面板无法访问"><a href="#重启-fnOS-系统后面板无法访问" class="headerlink" title="重启 fnOS 系统后面板无法访问"></a>重启 fnOS 系统后面板无法访问</h1><ul>
+<li>进入终端，并使用 root 用户下进行以下操作</li>
+<li>查看服务状态，获取服务文件地址</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">systemctl status 1panel.service</span><br></pre></td></tr></table></figure>
+<p>获取到，服务所在地址：<code>/etc/systemd/system/1panel.service</code></p>
+<ul>
+<li>修改服务 延时启动</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vi /etc/systemd/system/1panel.service</span><br></pre></td></tr></table></figure>
+
+<p>添加配置：<code>ExecStartPre=/bin/sleep 10</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=1Panel, a modern open source linux panel</span><br><span class="line">After=syslog.target network-online.target</span><br><span class="line">Wants=network-online.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">ExecStartPre=/bin/sleep 10</span><br><span class="line">ExecStart=/usr/bin/1panel</span><br><span class="line">ExecReload=/bin/kill -s HUP $MAINPID</span><br><span class="line">Restart=always</span><br><span class="line">RestartSec=5</span><br><span class="line">LimitNOFILE=1048576</span><br><span class="line">LimitNPROC=1048576</span><br><span class="line">LimitCORE=1048576</span><br><span class="line">Delegate=yes</span><br><span class="line">KillMode=process</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>重载并重启服务</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl restart 1panel.service</span><br></pre></td></tr></table></figure>]]></content>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2024/11/06/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>vocexhat-在线聊天室</title>
+    <url>/2024/11/08/vocexhat-%E5%9C%A8%E7%BA%BF%E8%81%8A%E5%A4%A9%E5%AE%A4/</url>
+    <content><![CDATA[<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -d --restart=always \</span><br><span class="line">  -p 3009:3000 \</span><br><span class="line">  --name vocechat-server \</span><br><span class="line">  -v /vol1/@appmeta/1panel/vocechat-server/data:/home/vocechat-server/data \</span><br><span class="line">  privoce/vocechat-server:latest \</span><br></pre></td></tr></table></figure>
+<h3 id="网页内嵌方式"><a href="#网页内嵌方式" class="headerlink" title="网页内嵌方式"></a>网页内嵌方式</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;iframe</span><br><span class="line">  src=&quot;//192.168.1.10:4433&quot;</span><br><span class="line">  width=&quot;800px&quot;</span><br><span class="line">  height=&quot;800px&quot;</span><br><span class="line">  frameborder=&quot;0&quot;</span><br><span class="line">  allow=&quot;camera;microphone&quot;</span><br><span class="line">&gt;&lt;/iframe&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="在命令行下修改用户-管理员密码"><a href="#在命令行下修改用户-管理员密码" class="headerlink" title="在命令行下修改用户&#x2F;管理员密码"></a>在命令行下修改用户&#x2F;管理员密码</h2><h3 id="如果是-Docker-启动的-vocechat-server"><a href="#如果是-Docker-启动的-vocechat-server" class="headerlink" title="如果是 Docker 启动的 vocechat-server"></a>如果是 Docker 启动的 vocechat-server</h3><ul>
+<li><p>停止容器<code>docker stop vocechat-server</code></p>
+</li>
+<li><p>从容器复制文件到主机</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker cp vocechat-server:/home/vocechat-server/data/db/db.sqlite ./db.sqlite</span><br><span class="line">sqlite3 db.sqlite</span><br><span class="line">update user set password=&#x27;14e1b600b1fd579f47433b88e8d85291&#x27; where email=&#x27;admin@email.com&#x27;;</span><br><span class="line">.exit</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将修改后的文件复制回容器</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker cp vocechat-server:/home/vocechat-server/data/db/db.sqlite ./db.sqlite</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>启动容器<code>docker start vocechat-server</code></p>
+</li>
+</ul>
+<h3 id="如果是命令行启动的-vocechat-server"><a href="#如果是命令行启动的-vocechat-server" class="headerlink" title="如果是命令行启动的 vocechat-server"></a>如果是命令行启动的 vocechat-server</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd vocechat-server/data/db</span><br><span class="line">sqlite3 db.sqlite</span><br><span class="line">update user set password=&#x27;14e1b600b1fd579f47433b88e8d85291&#x27; where email=&#x27;admin@email.com&#x27;;</span><br><span class="line">.exit</span><br></pre></td></tr></table></figure>
+<p>解释： <code>admin@email.com</code> 为需要修改的 <code>Email</code> ; <code>a02cc9a3fc5def5275b5ca22f0d8f414privoce</code> 对应的密码为 <code>123456</code></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>杂七杂八</title>
+    <url>/2024/11/06/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/</url>
+    <content><![CDATA[<h1 id="存放许多的小文件～"><a href="#存放许多的小文件～" class="headerlink" title="存放许多的小文件～"></a>存放许多的小文件～</h1><h2 id="img2kvm"><a href="#img2kvm" class="headerlink" title="img2kvm"></a><a href="https://suqiguniang.github.io/others/others/img2kvm">img2kvm</a></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">img2kvm</span><br><span class="line">pve下img写入disk脚本</span><br><span class="line">使用示例</span><br><span class="line">./imgkvm xxx.img vm-disk-1 local-lvm 100</span><br><span class="line">位置:/others/img2kvm</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="pve-souse-tar-gz"><a href="#pve-souse-tar-gz" class="headerlink" title="pve_souse.tar.gz"></a><a href="https://suqiguniang.github.io/others/others/pve_souse.tar.gz">pve_souse.tar.gz</a></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pve_souse.tar.gz</span><br><span class="line">pve_souse脚本</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="tool-sh"><a href="#tool-sh" class="headerlink" title="tool.sh"></a><a href="https://suqiguniang.github.io/others/others/tool.sh">tool.sh</a></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">tool.sh</span><br><span class="line">pve的又一种脚本</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="igd-rom-N100gop-rom"><a href="#igd-rom-N100gop-rom" class="headerlink" title="igd.rom N100gop.rom"></a><a href="https://suqiguniang.github.io/others/others/igd.rom">igd.rom</a> <a href="https://suqiguniang.github.io/others/others/N100gop.rom">N100gop.rom</a></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pve核显直通文件</span><br><span class="line">n100 pve igd gop rom文件</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="aria2-pro-脚本-move-sh-aria2-conf"><a href="#aria2-pro-脚本-move-sh-aria2-conf" class="headerlink" title="aria2-pro 脚本 move.sh aria2.conf"></a>aria2-pro 脚本 <a href="https://suqiguniang.github.io/others/others/move.sh">move.sh</a> <a href="https://suqiguniang.github.io/others/others/aria2.conf">aria2.conf</a></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">move.sh</span><br><span class="line">aria2-Pro的移动文件脚本，用于aria2-pro下载完成后自动根据后缀名分类文件</span><br><span class="line">位置：/others/move.sh</span><br><span class="line"></span><br><span class="line">aria2.conf</span><br><span class="line">aria2-Pro的配置文件</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="个人脚本-unrar-sh"><a href="#个人脚本-unrar-sh" class="headerlink" title="个人脚本 unrar.sh"></a>个人脚本 <a href="https://suqiguniang.github.io/others/others/unrar.sh">unrar.sh</a></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">unrar.sh</span><br><span class="line">配合crontab自动解压文件并删除文件</span><br><span class="line">cosplaytele</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+]]></content>
+  </entry>
+  <entry>
+    <title>music</title>
+    <url>/2024/11/08/music/</url>
+    <content><![CDATA[<h1 id="YesPlayMusic"><a href="#YesPlayMusic" class="headerlink" title="YesPlayMusic"></a>YesPlayMusic</h1><p>重要的事情说三遍:</p>
+<ul>
+<li>不要登陆！</li>
+<li>不要登陆！</li>
+<li>不要登陆！<br>网易云登录容易产生风控，冻结登录<br>搜索网易云账号<br>只能读取账号公开数据<br><a href="/img/2024-11-08-17:01:02.jpg">YesPlayMusic-1</a><br>YesPlayMusic时不时也会无法使用，等段时间就自己恢复了</li>
+</ul>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>node 14+ 环境 yarn</p>
+<ul>
+<li>部署网易云 API<br>克隆本仓库<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone --recursive https://github.com/qier222/YesPlayMusic.git</span><br></pre></td></tr></table></figure>
+安装依赖<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yarn install</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+（可选）使用 Nginx 反向代理 API，将 API 路径映射为 &#x2F;api，如果 API 和网页不在同一个域名下的话（跨域），会有一些 bug。<br>复制 &#x2F;.env.example 文件为 &#x2F;.env，修改里面 VUE_APP_NETEASE_API_URL 的值为网易云 API 地址。本地开发的话可以填写 API 地址为 <a href="http://localhost:3000，YesPlayMusic">http://localhost:3000，YesPlayMusic</a> 地址为 <a href="http://localhost:8080。如果你使用了反向代理">http://localhost:8080。如果你使用了反向代理</a> API，可以填写 API 地址为 &#x2F;api。<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">VUE_APP_NETEASE_API_URL=http://localhost:3000</span><br></pre></td></tr></table></figure>
+编译打包<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yarn run build</span><br></pre></td></tr></table></figure>
+将 &#x2F;dist 目录下的文件上传到你的 Web 服务器</li>
+</ul>
+<p>docker-Compose</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">networks:</span><br><span class="line">    music:</span><br><span class="line">        external: true</span><br><span class="line">services:</span><br><span class="line">    yesplaymusic:</span><br><span class="line">        container_name: yesplaymusic</span><br><span class="line">        image: fogforest/yesplaymusic:0.4.8-2</span><br><span class="line">        networks:</span><br><span class="line">            - music</span><br><span class="line">        ports:</span><br><span class="line">            - 28080:80</span><br><span class="line">        restart: always</span><br></pre></td></tr></table></figure>
+
+<p>R3PLAYX(基于yesplaymusic)</p>
+<ul>
+<li>目前docker的音乐api服务有问题，sqllite会报错</li>
+</ul>
+<p>创建 docker-compose.yml 文件，</p>
+<p>参考项目给出的配置（<a href="https://github.com/Sherlockouo/music/blob/dev/docker-compose.yml%EF%BC%89%EF%BC%8C%E4%BD%BF%E7%94%A8%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%99%A8%E5%86%99%E5%85%A5%E4%BB%A5%E4%B8%8B%E5%86%85%E5%AE%B9%EF%BC%8C">https://github.com/Sherlockouo/music/blob/dev/docker-compose.yml），使用文本编辑器写入以下内容，</a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">version: &#x27;3&#x27;</span><br><span class="line">services:</span><br><span class="line">    frontend:</span><br><span class="line">        image: sherlockouo/xtify-music-web:latest</span><br><span class="line">        ports:</span><br><span class="line">            - &quot;2222:80&quot;</span><br><span class="line">        networks:</span><br><span class="line">            - mynetwork</span><br><span class="line">    backend:</span><br><span class="line">        image: sherlockouo/xtify-music-server:latest</span><br><span class="line">        ports:</span><br><span class="line">            - &#x27;35530:35530&#x27;</span><br><span class="line">        networks:</span><br><span class="line">            - mynetwork</span><br><span class="line">networks:</span><br><span class="line">    mynetwork:</span><br></pre></td></tr></table></figure>
+
+<p>在 frontend 配置段 ‘2222:80’ 中，前面的数字是我们访问 R3PLAYX 的端口，可以修改成任意未被占用的端口号。<br>最后 Docker Compose 创建、启动容器，<br><code>docker-compose up -d</code><br>等待几分钟，打开本地浏览器输入 IP:端口 即可开始访问搭建好的 R3PLAYX。</p>
+]]></content>
+  </entry>
+</search>
