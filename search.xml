@@ -88,7 +88,7 @@
 ]]></content>
   </entry>
   <entry>
-    <title>music</title>
+    <title>第三方音乐服务</title>
     <url>/2024/11/08/music/</url>
     <content><![CDATA[<h1 id="YesPlayMusic"><a href="#YesPlayMusic" class="headerlink" title="YesPlayMusic"></a>YesPlayMusic</h1><p>重要的事情说三遍:</p>
 <ul>
@@ -135,5 +135,11 @@
 <li>等待几分钟，打开本地浏览器输入 IP:端口 即可开始访问搭建好的 R3PLAYX。</li>
 </ul>
 ]]></content>
+      <categories>
+        <category>影音娱乐</category>
+      </categories>
+      <tags>
+        <tag>music</tag>
+      </tags>
   </entry>
 </search>
