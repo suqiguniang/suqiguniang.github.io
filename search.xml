@@ -90,20 +90,29 @@
   <entry>
     <title>music</title>
     <url>/2024/11/08/music/</url>
-    <content><![CDATA[<h1 id="YesPlayMusic"><a href="#YesPlayMusic" class="headerlink" title="YesPlayMusic"></a>YesPlayMusic</h1><p>重要的事情说三遍:</p>
+    <content><![CDATA[<h1 id="YesPlayMusic233"><a href="#YesPlayMusic233" class="headerlink" title="YesPlayMusic233"></a>YesPlayMusic233</h1><p>重要的事情说三遍:</p>
 <ul>
 <li>不要登陆！</li>
 <li>不要登陆！</li>
 <li>不要登陆！<br>网易云登录容易产生风控，冻结登录<br>搜索网易云账号<br>只能读取账号公开数据<br><a href="/img/2024-11-08-17:01:02.jpg">YesPlayMusic-1</a><br>YesPlayMusic时不时也会无法使用，等段时间就自己恢复了</li>
 </ul>
-<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>node 14+ 环境 yarn</p>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><h3 id="方式一：本地部署"><a href="#方式一：本地部署" class="headerlink" title="方式一：本地部署"></a>方式一：本地部署</h3><p>node 14+ 环境 yarn</p>
 <ul>
-<li>部署网易云 API<br>克隆本仓库<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone --recursive https://github.com/qier222/YesPlayMusic.git</span><br></pre></td></tr></table></figure>
-安装依赖<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yarn install</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-（可选）使用 Nginx 反向代理 API，将 API 路径映射为 &#x2F;api，如果 API 和网页不在同一个域名下的话（跨域），会有一些 bug。<br>复制 &#x2F;.env.example 文件为 &#x2F;.env，修改里面 VUE_APP_NETEASE_API_URL 的值为网易云 API 地址。本地开发的话可以填写 API 地址为 <a href="http://localhost:3000，YesPlayMusic">http://localhost:3000，YesPlayMusic</a> 地址为 <a href="http://localhost:8080。如果你使用了反向代理">http://localhost:8080。如果你使用了反向代理</a> API，可以填写 API 地址为 &#x2F;api。<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">VUE_APP_NETEASE_API_URL=http://localhost:3000</span><br></pre></td></tr></table></figure>
-编译打包<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yarn run build</span><br></pre></td></tr></table></figure>
-将 &#x2F;dist 目录下的文件上传到你的 Web 服务器</li>
+<li>部署网易云 API</li>
+<li>克隆本仓库</li>
 </ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone --recursive https://github.com/qier222/YesPlayMusic.git</span><br></pre></td></tr></table></figure>
+
+<p>安装依赖</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yarn install</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>（可选）使用 Nginx 反向代理 API，将 API 路径映射为 &#x2F;api，如果 API 和网页不在同一个域名下的话（跨域），会有一些 bug。<br>复制 &#x2F;.env.example 文件为 &#x2F;.env，修改里面 VUE_APP_NETEASE_API_URL 的值为网易云 API 地址。本地开发的话可以填写 API 地址为 <a href="http://localhost:3000，YesPlayMusic">http://localhost:3000，YesPlayMusic</a> 地址为 <a href="http://localhost:8080。如果你使用了反向代理">http://localhost:8080。如果你使用了反向代理</a> API，可以填写 API 地址为 &#x2F;api。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">VUE_APP_NETEASE_API_URL=http://localhost:3000</span><br></pre></td></tr></table></figure>
+
+<p>编译打包</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yarn run build</span><br></pre></td></tr></table></figure>
+
+<p>将 &#x2F;dist 目录下的文件上传到你的 Web 服务器</p>
 <p>docker-Compose</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">networks:</span><br><span class="line">    music:</span><br><span class="line">        external: true</span><br><span class="line">services:</span><br><span class="line">    yesplaymusic:</span><br><span class="line">        container_name: yesplaymusic</span><br><span class="line">        image: fogforest/yesplaymusic:0.4.8-2</span><br><span class="line">        networks:</span><br><span class="line">            - music</span><br><span class="line">        ports:</span><br><span class="line">            - 28080:80</span><br><span class="line">        restart: always</span><br></pre></td></tr></table></figure>
 
