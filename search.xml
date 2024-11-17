@@ -1,19 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Qexo本地部署</title>
+    <url>/2024/11/12/Qexo-install/</url>
+    <content><![CDATA[<h1 id="Qexo本地部署"><a href="#Qexo本地部署" class="headerlink" title="Qexo本地部署"></a>Qexo本地部署</h1><p>准备工作：</p>
+<ul>
+<li>python3 环境</li>
+<li>pip</li>
+</ul>
+<h2 id="下载Release"><a href="#下载Release" class="headerlink" title="下载Release"></a>下载Release</h2><p>在 <a href="https://github.com/am-abudu/Qexo/releases">Release</a> 下载最新的版本 <em>Source code (zip)</em> 并解压</p>
+<h2 id="准备数据库"><a href="#准备数据库" class="headerlink" title="准备数据库"></a>准备数据库</h2><table>
+<thead>
+<tr>
+<th>官方支持</th>
+<th>第三方支持</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PostgreSQL</td>
+<td>CockroachDB</td>
+</tr>
+<tr>
+<td>MariaDB</td>
+<td>Firebird</td>
+</tr>
+<tr>
+<td>MySQL</td>
+<td>Google Cloud Spanner</td>
+</tr>
+<tr>
+<td>Oracle</td>
+<td>Microsoft SQL Server</td>
+</tr>
+<tr>
+<td>SQLite</td>
+<td>……</td>
+</tr>
+</tbody></table>
+<p>注1: 你可能需要根据你使用的数据库修改 <code>requirement.txt</code> 以安装依赖<br>注2: 在进行一键更新时，名称为<code>db</code>的目录下的文件以及名称为<code>configs.py</code>文件将不会被删除，你应该把重要文件（如数据库）放在该文件夹下</p>
+<h2 id="编辑配置"><a href="#编辑配置" class="headerlink" title="编辑配置"></a>编辑配置</h2><p>以使用 Mysql 为例, 确认好安装相关依赖后在<code>manage.py</code>的同级目录下创建并修改 <code>configs.py</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import pymysql</span><br><span class="line">pymysql.install_as_MySQLdb()</span><br><span class="line">DOMAINS = [&quot;127.0.0.1&quot;, &quot;yoursite.com&quot;]</span><br><span class="line">DATABASES = &#123;</span><br><span class="line">    &#x27;default&#x27;: &#123;</span><br><span class="line">            &#x27;ENGINE&#x27;: &#x27;django.db.backends.mysql&#x27;,</span><br><span class="line">            &#x27;NAME&#x27;: &#x27;qexo&#x27;,</span><br><span class="line">            &#x27;USER&#x27;: &#x27;root&#x27;,</span><br><span class="line">            &#x27;PASSWORD&#x27;: &#x27;password&#x27;,</span><br><span class="line">            &#x27;HOST&#x27;: &#x27;127.0.0.1&#x27;,</span><br><span class="line">            &#x27;PORT&#x27;: &#x27;3306&#x27;,</span><br><span class="line">            &#x27;OPTIONS&#x27;: &#123;</span><br><span class="line">                &quot;init_command&quot;: &quot;SET sql_mode=&#x27;STRICT_TRANS_TABLES&#x27;&quot;</span><br><span class="line">            &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>sqlite3<code>configs.py</code>示例</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 数据库配置</span><br><span class="line">import pymysql,os</span><br><span class="line"></span><br><span class="line">DOMAINS = [&quot;127.0.0.1&quot;, &quot;qexo.yyds.space&quot;, &quot;101.43.253.61&quot;]</span><br><span class="line">DATABASES = &#123;</span><br><span class="line">    &#x27;default&#x27;: &#123;</span><br><span class="line">        &#x27;ENGINE&#x27;: &#x27;django.db.backends.sqlite3&#x27;,</span><br><span class="line">        &#x27;NAME&#x27;: os.path.join(&#x27;/app/db&#x27; , &#x27;db.sqlite3&#x27;),</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="执行命令运行"><a href="#执行命令运行" class="headerlink" title="执行命令运行"></a>执行命令运行</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip3 install -r requirements.txt</span><br><span class="line">python3 manage.py makemigrations</span><br><span class="line">python3 manage.py migrate</span><br><span class="line">python3 manage.py runserver 0.0.0.0:8000 --noreload</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>qexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>初始化</title>
+    <url>/2024/11/13/bagin/</url>
+    <content><![CDATA[<h1 id="1panel"><a href="#1panel" class="headerlink" title="1panel"></a>1panel</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl -sSL https://resource.fit2cloud.com/1panel/package/quick_start.sh -o quick_start.sh &amp;&amp; bash quick_start.sh</span><br></pre></td></tr></table></figure>
+
+<h1 id="代理"><a href="#代理" class="headerlink" title="代理"></a>代理</h1><p>开启</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">export http_proxy=http://192.168.1.10:7890</span><br><span class="line">export https_proxy=http://192.168.1.10:7890</span><br></pre></td></tr></table></figure>
+
+<p>关闭</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">unset http_proxy</span><br><span class="line">unset https_proxy</span><br></pre></td></tr></table></figure>
+
+<h1 id="nodejs安装"><a href="#nodejs安装" class="headerlink" title="nodejs安装"></a>nodejs安装</h1><h2 id="安装-fnm-快速-Node-管理器"><a href="#安装-fnm-快速-Node-管理器" class="headerlink" title="安装 fnm (快速 Node 管理器)"></a>安装 fnm (快速 Node 管理器)</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl -fsSL https://fnm.vercel.app/install | bash</span><br></pre></td></tr></table></figure>
+
+<h2 id="激活-fnm"><a href="#激活-fnm" class="headerlink" title="激活 fnm"></a>激活 fnm</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">source ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<h2 id="下载并安装-Node-js"><a href="#下载并安装-Node-js" class="headerlink" title="下载并安装 Node.js"></a>下载并安装 Node.js</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fnm use --install-if-missing 23</span><br></pre></td></tr></table></figure>
+
+<h2 id="验证环境中是否存在正确的-Node-js-版本"><a href="#验证环境中是否存在正确的-Node-js-版本" class="headerlink" title="验证环境中是否存在正确的 Node.js 版本"></a>验证环境中是否存在正确的 Node.js 版本</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">node -v # 应该打印 `v23.2.0`</span><br></pre></td></tr></table></figure>
+
+<h2 id="验证环境中是否存在正确的-npm-版本"><a href="#验证环境中是否存在正确的-npm-版本" class="headerlink" title="验证环境中是否存在正确的 npm 版本"></a>验证环境中是否存在正确的 npm 版本</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm -v # 应该打印 `10.9.0`</span><br></pre></td></tr></table></figure>
+
+<h1 id="使用淘宝镜像源加速-NPM"><a href="#使用淘宝镜像源加速-NPM" class="headerlink" title="使用淘宝镜像源加速 NPM"></a>使用淘宝镜像源加速 NPM</h1><p>最新的：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm config set registry https://registry.npmmirror.com</span><br></pre></td></tr></table></figure>
+
+<p>使用阿里云 镜像源加速 NPM</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm config set registry https://npm.aliyun.com</span><br></pre></td></tr></table></figure>
+
+<p>使用腾讯云镜像源加速 NPM</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm config set registry http://mirrors.cloud.tencent.com/npm</span><br></pre></td></tr></table></figure>
+
+<p>使用华为云 镜像源加速 NPM</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm config set registry https://mirrors.huaweicloud.com/repository/npm</span><br></pre></td></tr></table></figure>
+
+<p>返回npm 官方原始镜像</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm config set registry https://registry.npmjs.org</span><br></pre></td></tr></table></figure>
+
+<h2 id="nrm-是一个-npm-源管理器，允许你快速地在-npm-源间切换。"><a href="#nrm-是一个-npm-源管理器，允许你快速地在-npm-源间切换。" class="headerlink" title="nrm 是一个 npm 源管理器，允许你快速地在 npm 源间切换。"></a>nrm 是一个 npm 源管理器，允许你快速地在 npm 源间切换。</h2><p>安装nrm</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install -g nrm</span><br></pre></td></tr></table></figure>
+
+<h1 id="安装-Hexo"><a href="#安装-Hexo" class="headerlink" title="安装 Hexo"></a>安装 Hexo</h1><p>所有必备的应用程序安装完成后，即可使用 npm 安装 Hexo。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+
+<h1 id="pip3安装并解决报错"><a href="#pip3安装并解决报错" class="headerlink" title="pip3安装并解决报错"></a>pip3安装并解决报错</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt-get install python3-pip</span><br><span class="line">mv /usr/lib/python3.11/EXTERNALLY-MANAGED /usr/lib/python3.11/EXTERNALLY-MANAGED.bk```</span><br></pre></td></tr></table></figure>
+]]></content>
+  </entry>
+  <entry>
     <title>docker-备份</title>
     <url>/2024/11/06/docker-%E5%A4%87%E4%BB%BD/</url>
     <content><![CDATA[<h1 id="docker-备份"><a href="#docker-备份" class="headerlink" title="docker 备份"></a>docker 备份</h1><h2 id="aria2-pro"><a href="#aria2-pro" class="headerlink" title="aria2-pro"></a>aria2-pro</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">    --name aria2-pro \</span><br><span class="line">    --restart unless-stopped \</span><br><span class="line">    --log-opt max-size=1m \</span><br><span class="line">    -e PUID=$UID \</span><br><span class="line">    -e PGID=$GID \</span><br><span class="line">    -e RPC_PORT=6800 \</span><br><span class="line">    -p 6800:6800 \</span><br><span class="line">    -e LISTEN_PORT=6888 \</span><br><span class="line">    -p 6888:6888 \</span><br><span class="line">    -p 6888:6888/udp \</span><br><span class="line">    -v /vol1/@appmeta/1panel/aria2-pro:/config \</span><br><span class="line">    -v /vol2/1000/sata/downloads:/downloads \</span><br><span class="line">    -v /vol2/1000/sata:/completed \</span><br><span class="line">    p3terx/aria2-pro</span><br></pre></td></tr></table></figure>
+
 <p>关键配置文件：<a href="https://suqiguniang.github.io/others/others/aria2.conf">aria2.conf</a>（必须） <a href="https://suqiguniang.github.io/others/others/move.sh">move.sh</a>（可选）</p>
 <h2 id="clash"><a href="#clash" class="headerlink" title="clash"></a>clash</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">  --name clash \</span><br><span class="line">  --restart=always \</span><br><span class="line">  --log-opt max-size=1m \</span><br><span class="line">  -v /vol1/@appmeta/1panel/clash/clash.yaml:/root/.config/clash/config.yaml \</span><br><span class="line">  -p 9090:8080 -p 7890:7890 \</span><br><span class="line">  laoyutang/clash-and-dashboard:latest</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 <h2 id="speedtest"><a href="#speedtest" class="headerlink" title="speedtest"></a>speedtest</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">  --name speedtest \</span><br><span class="line">  --restart=always \</span><br><span class="line">  -p 40080:80  \</span><br><span class="line">  ghcr.io/librespeed/speedtest:latest</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 <h2 id="natfrp"><a href="#natfrp" class="headerlink" title="natfrp"></a>natfrp</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run \</span><br><span class="line">   -d \</span><br><span class="line">   --network=host \</span><br><span class="line">   --restart=on-failure:5 \</span><br><span class="line">   --pull=always \</span><br><span class="line">   --name=natfrp-service \</span><br><span class="line">   -e &quot;NATFRP_TOKEN=&lt;访问密钥&gt;&quot; \</span><br><span class="line">   -e &quot;NATFRP_REMOTE=&lt;设定一个远程管理密码，最少8个字符&gt;&quot; \</span><br><span class="line">   natfrp.com/launcher</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <h2 id="artalk"><a href="#artalk" class="headerlink" title="artalk"></a>artalk</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">    --name artalk \</span><br><span class="line">    -p 23366:23366 \</span><br><span class="line">    -v /vol1/@appmeta/1panel/artalk:/data \</span><br><span class="line">    -e &quot;TZ=Asia/Shanghai&quot; \</span><br><span class="line">    -e &quot;ATK_LOCALE=zh-CN&quot; \</span><br><span class="line">    -e &quot;ATK_SITE_DEFAULT=柒柒的Artalk&quot; \</span><br><span class="line">    -e &quot;ATK_SITE_URL=http://192.168.1.10:23366&quot; \</span><br><span class="line">    artalk/artalk-go</span><br></pre></td></tr></table></figure>
+
 <p>执行命令创建管理员账户：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker exec -it artalk artalk admin</span><br></pre></td></tr></table></figure>
-<h2 id="Arya-在线-Markdown-编辑器"><a href="#Arya-在线-Markdown-编辑器" class="headerlink" title="Arya - 在线 Markdown 编辑器"></a>Arya - 在线 Markdown 编辑器</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -d -p 8866:80 nicejade/markdown-online-editor:latest</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="vocechat-server-云社交媒体聊天服务"><a href="#vocechat-server-云社交媒体聊天服务" class="headerlink" title="vocechat-server 云社交媒体聊天服务"></a>vocechat-server 云社交媒体聊天服务</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -d --restart=always \</span><br><span class="line">  -p 3009:3000 \</span><br><span class="line">  --name vocechat-server \</span><br><span class="line">  -v /vol1/@appmeta/1panel/vocechat-server/data:/home/vocechat-server/data \</span><br><span class="line">  privoce/vocechat-server:latest \</span><br></pre></td></tr></table></figure>]]></content>
+
+<h2 id="Arya-在线-Markdown-编辑器"><a href="#Arya-在线-Markdown-编辑器" class="headerlink" title="Arya - 在线 Markdown 编辑器"></a>Arya - 在线 Markdown 编辑器</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -d -p 8866:80 nicejade/markdown-online-editor:latest</span><br></pre></td></tr></table></figure>
+
+<h2 id="vocechat-server-云社交媒体聊天服务"><a href="#vocechat-server-云社交媒体聊天服务" class="headerlink" title="vocechat-server 云社交媒体聊天服务"></a>vocechat-server 云社交媒体聊天服务</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -d --restart=always \</span><br><span class="line">  -p 3009:3000 \</span><br><span class="line">  --name vocechat-server \</span><br><span class="line">  -v /vol1/@appmeta/1panel/vocechat-server/data:/home/vocechat-server/data \</span><br><span class="line">  privoce/vocechat-server:latest \</span><br></pre></td></tr></table></figure>
+]]></content>
   </entry>
   <entry>
     <title>重启 fnOS 系统后1Panel面板无法访问</title>
@@ -37,25 +139,6 @@
 <li>重载并重启服务</li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl restart 1panel.service</span><br></pre></td></tr></table></figure>
-]]></content>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2024/11/06/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-<p>233</p>
 ]]></content>
   </entry>
   <entry>
@@ -146,62 +229,40 @@
   <entry>
     <title>杂七杂八</title>
     <url>/2024/11/06/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/</url>
-    <content><![CDATA[<h1 id="存放许多的小文件～"><a href="#存放许多的小文件～" class="headerlink" title="存放许多的小文件～"></a>存放许多的小文件～</h1><h2 id="img2kvm"><a href="#img2kvm" class="headerlink" title="img2kvm"></a><a href="https://suqiguniang.github.io/others/others/img2kvm">img2kvm</a></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">img2kvm</span><br><span class="line">pve下img写入disk脚本</span><br><span class="line">使用示例</span><br><span class="line">./imgkvm xxx.img vm-disk-1 local-lvm 100</span><br><span class="line">位置:/others/img2kvm</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="pve-souse-tar-gz"><a href="#pve-souse-tar-gz" class="headerlink" title="pve_souse.tar.gz"></a><a href="https://suqiguniang.github.io/others/others/pve_souse.tar.gz">pve_souse.tar.gz</a></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pve_souse.tar.gz</span><br><span class="line">pve_souse脚本</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="tool-sh"><a href="#tool-sh" class="headerlink" title="tool.sh"></a><a href="https://suqiguniang.github.io/others/others/tool.sh">tool.sh</a></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">tool.sh</span><br><span class="line">pve的又一种脚本</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="igd-rom-N100gop-rom"><a href="#igd-rom-N100gop-rom" class="headerlink" title="igd.rom N100gop.rom"></a><a href="https://suqiguniang.github.io/others/others/igd.rom">igd.rom</a> <a href="https://suqiguniang.github.io/others/others/N100gop.rom">N100gop.rom</a></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pve核显直通文件</span><br><span class="line">n100 pve igd gop rom文件</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="aria2-pro-脚本-move-sh-aria2-conf"><a href="#aria2-pro-脚本-move-sh-aria2-conf" class="headerlink" title="aria2-pro 脚本 move.sh aria2.conf"></a>aria2-pro 脚本 <a href="https://suqiguniang.github.io/others/others/move.sh">move.sh</a> <a href="https://suqiguniang.github.io/others/others/aria2.conf">aria2.conf</a></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">move.sh</span><br><span class="line">aria2-Pro的移动文件脚本，用于aria2-pro下载完成后自动根据后缀名分类文件</span><br><span class="line">位置：/others/move.sh</span><br><span class="line"></span><br><span class="line">aria2.conf</span><br><span class="line">aria2-Pro的配置文件</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="个人脚本-unrar-sh"><a href="#个人脚本-unrar-sh" class="headerlink" title="个人脚本 unrar.sh"></a>个人脚本 <a href="https://suqiguniang.github.io/others/others/unrar.sh">unrar.sh</a></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">unrar.sh</span><br><span class="line">配合crontab自动解压文件并删除文件</span><br><span class="line">cosplaytele</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+    <content><![CDATA[<h1 id="存放许多的小文件～"><a href="#存放许多的小文件～" class="headerlink" title="存放许多的小文件～"></a>存放许多的小文件～</h1><h2 id="img2kvm"><a href="#img2kvm" class="headerlink" title="img2kvm"></a><a href="https://suqiguniang.github.io/others/others/img2kvm">img2kvm</a></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">img2kvm</span><br><span class="line">pve下img写入disk脚本</span><br><span class="line">使用示例</span><br><span class="line">./imgkvm xxx.img vm-disk-1 local-lvm 100</span><br><span class="line">位置:/others/img2kvm</span><br></pre></td></tr></table></figure>
+
+<h2 id="pve-souse-tar-gz"><a href="#pve-souse-tar-gz" class="headerlink" title="pve_souse.tar.gz"></a><a href="https://suqiguniang.github.io/others/others/pve_souse.tar.gz">pve_souse.tar.gz</a></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pve_souse.tar.gz</span><br><span class="line">pve_souse脚本</span><br></pre></td></tr></table></figure>
+
+<h2 id="tool-sh"><a href="#tool-sh" class="headerlink" title="tool.sh"></a><a href="https://suqiguniang.github.io/others/others/tool.sh">tool.sh</a></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">tool.sh</span><br><span class="line">pve的又一种脚本</span><br></pre></td></tr></table></figure>
+
+<h2 id="igd-rom-N100gop-rom"><a href="#igd-rom-N100gop-rom" class="headerlink" title="igd.rom N100gop.rom"></a><a href="https://suqiguniang.github.io/others/others/igd.rom">igd.rom</a> <a href="https://suqiguniang.github.io/others/others/N100gop.rom">N100gop.rom</a></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pve核显直通文件</span><br><span class="line">n100 pve igd gop rom文件</span><br></pre></td></tr></table></figure>
+
+<h2 id="aria2-pro-脚本-move-sh-aria2-conf"><a href="#aria2-pro-脚本-move-sh-aria2-conf" class="headerlink" title="aria2-pro 脚本 move.sh aria2.conf"></a>aria2-pro 脚本 <a href="https://suqiguniang.github.io/others/others/move.sh">move.sh</a> <a href="https://suqiguniang.github.io/others/others/aria2.conf">aria2.conf</a></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">move.sh</span><br><span class="line">aria2-Pro的移动文件脚本，用于aria2-pro下载完成后自动根据后缀名分类文件</span><br><span class="line">位置：/others/move.sh</span><br><span class="line"></span><br><span class="line">aria2.conf</span><br><span class="line">aria2-Pro的配置文件</span><br></pre></td></tr></table></figure>
+
+<h2 id="个人脚本-unrar-sh"><a href="#个人脚本-unrar-sh" class="headerlink" title="个人脚本 unrar.sh"></a>个人脚本 <a href="https://suqiguniang.github.io/others/others/unrar.sh">unrar.sh</a></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">unrar.sh</span><br><span class="line">配合crontab自动解压文件并删除文件</span><br><span class="line">cosplaytele</span><br></pre></td></tr></table></figure>
+
+<h2 id="backup-script-安卓数据备份脚本"><a href="#backup-script-安卓数据备份脚本" class="headerlink" title="backup_script 安卓数据备份脚本"></a>backup_script 安卓数据备份脚本</h2><p>创作该脚本是为了使用户能够更加完整地备份&#x2F;恢复应用数据， 支持设备必须符合以下条件：+。<code>Android 8+</code>​<code>arm64</code></p>
+<p>由于本人是台湾人所以发布的版本为繁体版 （CN系统将自动翻译自身脚本为简体中文）</p>
+<p>前往 <a href="https://github.com/YAWAsau/backup_script/releases">Releases · YAWAsau&#x2F;backup_script</a> 进行下载最新版</p>
+<p>github下载:<a href="https://github.com/YAWAsau/backup_script/releases/download/V16.2/speed-backupV16.2.zip">speed-backupV16.2.zip</a><br>本站下载:<a href="/link/speed-backupV16.2.zip">speed-backupV16.2.zip</a></p>
 ]]></content>
   </entry>
   <entry>
-    <title>Qexo本地部署</title>
-    <url>/2024/11/12/Qexo-install/</url>
-    <content><![CDATA[<h1 id="Qexo本地部署"><a href="#Qexo本地部署" class="headerlink" title="Qexo本地部署"></a>Qexo本地部署</h1><p>准备工作：</p>
-<ul>
-<li>python3 环境</li>
-<li>pip</li>
-</ul>
-<h2 id="下载Release"><a href="#下载Release" class="headerlink" title="下载Release"></a>下载Release</h2><p>在 <a href="https://github.com/am-abudu/Qexo/releases">Release</a> 下载最新的版本 <em>Source code (zip)</em> 并解压</p>
-<h2 id="准备数据库"><a href="#准备数据库" class="headerlink" title="准备数据库"></a>准备数据库</h2><table>
-<thead>
-<tr>
-<th>官方支持</th>
-<th>第三方支持</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>PostgreSQL</td>
-<td>CockroachDB</td>
-</tr>
-<tr>
-<td>MariaDB</td>
-<td>Firebird</td>
-</tr>
-<tr>
-<td>MySQL</td>
-<td>Google Cloud Spanner</td>
-</tr>
-<tr>
-<td>Oracle</td>
-<td>Microsoft SQL Server</td>
-</tr>
-<tr>
-<td>SQLite</td>
-<td>……</td>
-</tr>
-</tbody></table>
-<p>注1: 你可能需要根据你使用的数据库修改 <code>requirement.txt</code> 以安装依赖<br>注2: 在进行一键更新时，名称为<code>db</code>的目录下的文件以及名称为<code>configs.py</code>文件将不会被删除，你应该把重要文件（如数据库）放在该文件夹下</p>
-<h2 id="编辑配置"><a href="#编辑配置" class="headerlink" title="编辑配置"></a>编辑配置</h2><p>以使用 Mysql 为例, 确认好安装相关依赖后在<code>manage.py</code>的同级目录下创建并修改 <code>configs.py</code></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import pymysql</span><br><span class="line">pymysql.install_as_MySQLdb()</span><br><span class="line">DOMAINS = [&quot;127.0.0.1&quot;, &quot;yoursite.com&quot;]</span><br><span class="line">DATABASES = &#123;</span><br><span class="line">    &#x27;default&#x27;: &#123;</span><br><span class="line">            &#x27;ENGINE&#x27;: &#x27;django.db.backends.mysql&#x27;,</span><br><span class="line">            &#x27;NAME&#x27;: &#x27;qexo&#x27;,</span><br><span class="line">            &#x27;USER&#x27;: &#x27;root&#x27;,</span><br><span class="line">            &#x27;PASSWORD&#x27;: &#x27;password&#x27;,</span><br><span class="line">            &#x27;HOST&#x27;: &#x27;127.0.0.1&#x27;,</span><br><span class="line">            &#x27;PORT&#x27;: &#x27;3306&#x27;,</span><br><span class="line">            &#x27;OPTIONS&#x27;: &#123;</span><br><span class="line">                &quot;init_command&quot;: &quot;SET sql_mode=&#x27;STRICT_TRANS_TABLES&#x27;&quot;</span><br><span class="line">            &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    <title>Hello World</title>
+    <url>/2024/11/03/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
 
-<p>sqlite3<code>configs.py</code>示例</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 数据库配置</span><br><span class="line">import pymysql,os</span><br><span class="line"></span><br><span class="line">DOMAINS = [&quot;127.0.0.1&quot;, &quot;qexo.yyds.space&quot;, &quot;101.43.253.61&quot;]</span><br><span class="line">DATABASES = &#123;</span><br><span class="line">    &#x27;default&#x27;: &#123;</span><br><span class="line">        &#x27;ENGINE&#x27;: &#x27;django.db.backends.sqlite3&#x27;,</span><br><span class="line">        &#x27;NAME&#x27;: os.path.join(&#x27;/app/db&#x27; , &#x27;db.sqlite3&#x27;),</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
 
-<h2 id="执行命令运行"><a href="#执行命令运行" class="headerlink" title="执行命令运行"></a>执行命令运行</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip3 install -r requirements.txt</span><br><span class="line">python3 manage.py makemigrations</span><br><span class="line">python3 manage.py migrate</span><br><span class="line">python3 manage.py runserver 0.0.0.0:8000 --noreload</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 ]]></content>
-      <tags>
-        <tag>qexo</tag>
-      </tags>
   </entry>
 </search>
