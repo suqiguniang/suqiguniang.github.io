@@ -232,7 +232,7 @@ post_copyright:
   # 是否进行文章 URL 解码
   decode: false
   # 作者链接
-  author_href: https://suqiguniang.github.io/
+  author_href: https://www.suqiguniang.dpdns.org/
   # 许可证类型
   license: CC BY-NC-SA 4.0
   # 许可证链接
@@ -343,7 +343,7 @@ aside:
       # 按钮文本
       text: 苏柒姑娘
       # 按钮链接
-      link: https://suqiguniang.github.io/
+      link: https://www.suqiguniang.dpdns.org/
   card_announcement:
     # 是否显示公告卡片
     enable: true
