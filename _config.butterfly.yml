@@ -1229,8 +1229,8 @@ css_prefix: true
 inject:
   head:
     # - <link rel="stylesheet" href="/xxx.css">
-    - <link rel="stylesheet" href="/fonts/suqifont.ttf">
-    - <link rel="stylesheet" href="/fonts/suqifont.css">
+    # - <link rel="stylesheet" href="/fonts/suqifont.ttf">
+    # - <link rel="stylesheet" href="/fonts/suqifont.css">
 
   bottom:
     # - <script src="xxxx"></script>
