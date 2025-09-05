@@ -115,6 +115,7 @@ cover:
   # 当未设置封面时，显示默认封面
   default_cover:
      - /img/91054694_p0.jpg
+     - /img/90514500_p0.jpg
 
 # 替换损坏的图片
 error_img:
@@ -195,7 +196,7 @@ subtitle:
 # 首页文章佈局
 # 1: 行佈局
 # 2: 列布局
-index_layout: 1
+index_layout: 3
 
 # 在首页显示文章简介
 # 1: 描述
@@ -844,7 +845,7 @@ google_adsense:
   # 是否自动投放广告
   auto_ads: true
   # 广告脚本 URL
-  js: https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js
+  js: 
   # 客户 ID
   client:
   # 是否启用页面级广告
@@ -979,11 +980,11 @@ hr_icon:
 # https://github.com/disjukr/activate-power-mode
 activate_power_mode:
   # 是否启用打字机效果
-  enable: false
+  enable: true
   # 是否启用彩色效果
   colorful: true
   # 是否启用震动效果
-  shake: true
+  shake: false
   # 是否在移动设备上启用
   mobile: false
 
@@ -1228,8 +1229,9 @@ css_prefix: true
 inject:
   head:
     # - <link rel="stylesheet" href="/xxx.css">
-    - <link rel="stylesheet" href="/fonts/suqifont.css">
     - <link rel="stylesheet" href="/fonts/suqifont.ttf">
+    - <link rel="stylesheet" href="/fonts/suqifont.css">
+
   bottom:
     # - <script src="xxxx"></script>
 
