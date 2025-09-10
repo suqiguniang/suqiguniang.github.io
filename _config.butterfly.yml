@@ -22,7 +22,7 @@ menu:
    照片: /Gallery/ || fas fa-images
    电影: /movies/ || fas fa-video
    友链: /link/ || fas fa-link
-  杂谈: /talk/ || fas fa-commin
+  杂谈: /talk/ || fas fa-commit 
   关于: /about/ || fas fa-heart
 
 # --------------------------------------
@@ -463,18 +463,18 @@ darkmode:
   end:
 
 # 在返回顶部按钮中显示滚动百分比
-rightside_scroll_percent: false
+rightside_scroll_percent: true
 
 # 不要修改以下设置，除非你知道它们的工作原理
 # 选择：readmode,translate,darkmode,hideAside,toc,chat,comment
 # 不要重复相同的值
 rightside_item_order:
   # 是否启用右侧项目顺序
-  enable: false
+  enable: true
   # 隐藏的默认项目：readmode,translate,darkmode,hideAside
   hide:
   # 显示的默认项目：toc,chat,comment
-  show:
+  show: readmode,translate,darkmode,hideAside,toc,chat,comment
 
 # 右下角配置按钮动画效果
 rightside_config_animation: true
@@ -554,8 +554,8 @@ math:
 search:
   # 选择：algolia_search / local_search / docsearch
   # 如果不需要搜索功能，保持为空
-  use:
-  placeholder:
+  use: local_search
+  placeholder: 233
 
   # Algolia 搜索
   algolia_search:
@@ -567,7 +567,7 @@ search:
     # 页面加载时预加载搜索数据
     preload: false
     # 每篇文章显示的顶部 n 个搜索结果，设置为 -1 显示所有结果
-    top_n_per_article: 1
+    top_n_per_article: 3
     # 将 HTML 字符串反转义为可读内容
     unescape: false
     CDN:
@@ -966,7 +966,7 @@ font:
 
 # 网站标题和副标题的字体设置
 blog_title_font:
-  font_link: 
+  font_link: /fonts/suqifont.ttf
   font-family: suqifont
 
 # 分隔符图标的设置
@@ -1146,7 +1146,7 @@ note:
 # https://github.com/MoOx/pjax
 pjax:
   # 是否启用 pjax
-  enable: false
+  enable: true
   # 排除指定页面不使用 pjax，如 '/music/'
   exclude:
     # - /xxxxxx/
@@ -1230,11 +1230,10 @@ css_prefix: true
 inject:
   head:
     # - <link rel="stylesheet" href="/xxx.css">
-    # - <link rel="stylesheet" href="/fonts/suqifont.ttf">
-    # - <link rel="stylesheet" href="/fonts/suqifont.css">
-
+     - <link rel="stylesheet" href="/fonts/suqifont.css">
   bottom:
     # - <script src="xxxx"></script>
+
 
 # CDN 设置
 # 除非你知道它们的工作原理，否则不要修改以下设置

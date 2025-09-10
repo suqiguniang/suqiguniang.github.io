@@ -114,6 +114,11 @@ ignore:
 ## Themes: https://hexo.io/themes/
 theme: butterfly
 
+search:
+  path: search.json
+  field: all
+  content: true
+
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
