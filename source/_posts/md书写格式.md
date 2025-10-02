@@ -2,7 +2,7 @@
 title: md书写格式
 abbrlink: da0b409
 date: 2025-09-03 15:26:26
-cover: https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png
+<!-- cover: https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png -->
 tags:
 ---
 # md书写格式

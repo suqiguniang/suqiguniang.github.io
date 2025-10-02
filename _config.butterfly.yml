@@ -117,6 +117,12 @@ cover:
   default_cover:
      - /img/91054694_p0.jpg
      - /img/90514500_p0.jpg
+     - /img/135332884_p0.png
+     - /img/134870787_p0.jpg
+     - /img/135288076_p4.png
+     - /img/133854269_p0.jpg
+     - /img/129627791_p0.jpg
+     - /img/127176965_p0.png
 
 # 替换损坏的图片
 error_img:
