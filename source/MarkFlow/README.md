@@ -2,8 +2,6 @@
 
 > 优雅专业的 Markdown 超轻量编辑器，为开发者、技术写作者和内容创作者提供极致的写作体验，提供 Markdown 转 Html富文本 和 Markdown 转 PNG 图片导出功能。
 
-![GitHub stars](https://img.shields.io/github/stars/vorojar/markdown?style=social)
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
 ## ✨ DEMO
 
@@ -69,14 +67,9 @@
 4. 推送到分支 (git push origin feature/AmazingFeature)
 5. 打开一个 Pull Request
 
-## 📄 许可证
-
-本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情
-
 ## 🌟 支持我们
 
 如果您觉得 MarkFlow 对您有帮助，欢迎给我们一个 star ⭐️
 
 ---
 
-Made with ❤️ by [vorojar](https://github.com/vorojar)

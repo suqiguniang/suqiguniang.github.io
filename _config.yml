@@ -48,6 +48,7 @@ skip_render:
   - "MarkFlow/**"
   - "README.md"
   - "CNAME"
+  - "music/**"
 # Writing
 new_post_name: :title.md # File name of new posts
 default_layout: post

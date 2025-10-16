@@ -75,7 +75,7 @@ disable_top_img: false
 default_top_img:
 
 # 主页的横幅图片
-index_img: /img/93767347_p0.jpg
+index_img: /img/135288076_p4.png
 
 # 归档页的横幅图片
 archive_img: /img/86284440_p0.jpg
@@ -102,7 +102,7 @@ footer_img: false
 # 网站背景
 # 可以设置为颜色或图片
 # 图片格式: url(http://xxxxxx.com/xxx.jpg)
-background: /img/93767347_p0.jpg
+background: /img/135288076_p4.png
 
 # 封面设置
 cover:
@@ -353,7 +353,7 @@ aside:
       link: https://www.suqiguniang.dpdns.org/
   card_announcement:
     # 是否显示公告卡片
-    enable: true
+    enable: false
     # 公告内容
     content: This is my Blog
   card_recent_post:
@@ -362,7 +362,7 @@ aside:
     # 显示文章数量，0 表示显示所有
     limit: 5
     # 排序方式：date / updated
-    sort: date
+    sort: dates
     sort_order:
   card_newest_comments:
     # 是否显示最新评论卡片
