@@ -1,0 +1,15 @@
+*.deploy_git
+*.fnsync_temp_dir
+*.git
+*.github
+*node_modules
+*public
+*themes
+*.gitignore
+*db.json
+
+
+
+
+
+
