@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MarkFlow - 优雅的 Markdown 编辑器 | 实时预览 | 一键导出图片</title>
+    <meta name="description" content="MarkFlow 是一款专业的在线 Markdown 编辑器，支持实时预览、代码高亮、一键导出图片、快捷工具栏等功能。为开发者、技术写作者和内容创作者提供高效的写作体验。">
+    <meta name="keywords" content="Markdown编辑器,在线Markdown,实时预览,代码高亮,图片导出,技术写作,内容创作,开发文档">
+    <meta name="author" content="Vorojar.Wu">
+    <meta property="og:title" content="MarkFlow - 专业的 Markdown 编辑器">
+    <meta property="og:description" content="专业的在线 Markdown 编辑器，支持实时预览、代码高亮、一键导出图片等功能">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://github.com/vorojar/MarkFlow">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="MarkFlow - 专业的 Markdown 编辑器">
+    <meta name="twitter:description" content="专业的在线 Markdown 编辑器，支持实时预览、代码高亮、一键导出图片等功能">
+    <link rel="canonical" href="https://github.com/vorojar/MarkFlow">
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    <script src="scripts/3.4.17"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/marked@4.3.0/marked.min.js"></script> -->
+    <script src="scripts/marked.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script> -->
+    <script src="scripts/html2canvas.min.js"></script>
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> -->
+    <link rel="stylesheet" href="styles/all.min.css">
+    <script src="scripts/tailwind.config.js"></script>
+
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+
+<body class="flex flex-col h-screen bg-gray-100">
+    <!-- 固定的顶部导航栏 -->
+    <nav class="bg-white shadow-lg fixed top-0 left-0 right-0 z-10">
+        <div class="px-4 py-2">
+            <div class="flex justify-between items-center">
+                <div class="text-lg font-bold text-gray-800 truncate max-w-[70%]">MarkFlow - 优雅的Markdown 编辑器</div>
+                <a href="https://github.com/vorojar/MarkFlow" target="_blank" class="px-2.5 py-1 bg-gray-100 text-gray-600 text-xs rounded hover:bg-gray-200 transition-colors flex items-center gap-1">
+                    <i class="fab fa-github text-base"></i>
+                    GitHub
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 设置面板 -->
+    <div id="settingsPanel" class="hidden fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-20">
+        <div class="flex flex-col h-full">
+            <!-- 设置面板头部 -->
+            <div class="flex justify-between items-center px-4 py-3 border-b">
+                <h3 class="text-lg font-semibold text-gray-800">图片导出设置</h3>
+                <button id="closeSettingsBtn" class="text-gray-500 hover:text-gray-700">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- 设置选项 -->
+            <div class="flex-1 overflow-auto p-4 space-y-6">
+                <!-- 背景颜色 -->
+                <div class="space-y-2">
+                    <label class="text-sm font-medium text-gray-700">背景颜色</label>
+                    <div class="flex flex-wrap gap-2" id="bgColorOptions">
+                        <div class="color-option selected" style="background-color: #ffffff;" data-color="#ffffff"></div>
+                        <div class="color-option" style="background-color: #f8fafc;" data-color="#f8fafc"></div>
+                        <div class="color-option" style="background-color: #f1f5f9;" data-color="#f1f5f9"></div>
+                        <div class="color-option" style="background-color: #fef2f2;" data-color="#fef2f2"></div>
+                        <div class="color-option" style="background-color: #fff7ed;" data-color="#fff7ed"></div>
+                        <div class="color-option" style="background-color: #525252;" data-color="#525252"></div>
+                        <div class="color-option" style="background-color: #AC6A6A;" data-color="#AC6A6A"></div>
+                        <div class="color-option" style="background-color: #1c1917;" data-color="#1c1917"></div>
+                    </div>
+                </div>
+
+                <!-- 边框样式 -->
+                <div class="space-y-2">
+                    <label class="text-sm font-medium text-gray-700">边框样式</label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button class="style-button border rounded px-3 py-2 text-sm hover:bg-gray-50 selected" data-border-style="simple">简约边框</button>
+                        <button class="style-button border rounded px-3 py-2 text-sm hover:bg-gray-50" data-border-style="shadow">阴影边框</button>
+                    </div>
+                </div>
+
+                <!-- 水印文字 -->
+                <div class="space-y-2">
+                    <label class="text-sm font-medium text-gray-700">水印文字</label>
+                    <input type="text" id="watermarkText" class="w-full px-3 py-2 border rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-500" value="由 MarkFlow 生成" placeholder="输入水印文字">
+                </div>
+
+                <!-- 内边距大小 -->
+                <div class="space-y-2">
+                    <label class="text-sm font-medium text-gray-700">内边距大小</label>
+                    <div class="grid grid-cols-3 gap-2">
+                        <button class="style-button border rounded px-3 py-2 text-sm hover:bg-gray-50" data-padding="small">小</button>
+                        <button class="style-button border rounded px-3 py-2 text-sm hover:bg-gray-50 selected" data-padding="medium">中</button>
+                        <button class="style-button border rounded px-3 py-2 text-sm hover:bg-gray-50" data-padding="large">大</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 底部按钮 -->
+            <div class="border-t p-4">
+                <button id="resetSettings" class="w-full px-4 py-2 bg-gray-100 text-gray-700 rounded hover:bg-gray-200 transition-colors">恢复默认设置</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 遮罩层 -->
+    <div id="overlay" class="hidden fixed inset-0 bg-black bg-opacity-25 z-10"></div>
+
+    <!-- 主要内容区域 -->
+    <div class="flex-1 container mx-auto px-2 py-1 mt-[44px]">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 h-[calc(100vh-60px)]">
+            <!-- 编辑器 -->
+            <div class="bg-white rounded shadow-lg p-2 flex flex-col min-h-[50vh] md:min-h-0 overflow-hidden">
+                <!-- Markdown 工具栏 -->
+                <div class="md-toolbar">
+                    <div class="toolbar-group">
+                        <button class="tooltip" onclick="insertMarkdown('heading')">
+                            <i class="fas fa-heading"></i>
+                            <span class="tooltiptext">标题 (Ctrl+H)</span>
+                        </button>
+                        <button class="tooltip" onclick="insertMarkdown('bold')">
+                            <i class="fas fa-bold"></i>
+                            <span class="tooltiptext">粗体 (Ctrl+B)</span>
+                        </button>
+                        <button class="tooltip" onclick="insertMarkdown('italic')">
+                            <i class="fas fa-italic"></i>
+                            <span class="tooltiptext">斜体 (Ctrl+I)</span>
+                        </button>
+                        <button class="tooltip" onclick="insertMarkdown('link')">
+                            <i class="fas fa-link"></i>
+                            <span class="tooltiptext">链接 (Ctrl+K)</span>
+                        </button>
+                        <button class="tooltip" onclick="insertMarkdown('image')">
+                            <i class="fas fa-image"></i>
+                            <span class="tooltiptext">图片</span>
+                        </button>
+                        <button class="tooltip" onclick="insertMarkdown('code')">
+                            <i class="fas fa-code"></i>
+                            <span class="tooltiptext">代码块</span>
+                        </button>
+                        <button class="tooltip" onclick="insertMarkdown('quote')">
+                            <i class="fas fa-quote-right"></i>
+                            <span class="tooltiptext">引用</span>
+                        </button>
+                        <button class="tooltip" onclick="insertMarkdown('list-ul')">
+                            <i class="fas fa-list-ul"></i>
+                            <span class="tooltiptext">无序列表</span>
+                        </button>
+                        <button class="tooltip" onclick="insertMarkdown('list-ol')">
+                            <i class="fas fa-list-ol"></i>
+                            <span class="tooltiptext">有序列表</span>
+                        </button>
+                        <button class="tooltip" onclick="insertMarkdown('tasks')">
+                            <i class="fas fa-tasks"></i>
+                            <span class="tooltiptext">任务列表</span>
+                        </button>
+                        <button class="tooltip" onclick="insertMarkdown('table')">
+                            <i class="fas fa-table"></i>
+                            <span class="tooltiptext">表格</span>
+                        </button>
+                        <button class="tooltip" onclick="insertMarkdown('hr')">
+                            <i class="fas fa-minus"></i>
+                            <span class="tooltiptext">分隔线</span>
+                        </button>
+                    </div>
+                    <div class="toolbar-group">
+                        <button id="copyBtn" class="tooltip" onclick="copyMarkdown()">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">复制Markdown</span>
+                        </button>
+                        <button id="clearBtn" class="tooltip">
+                            <i class="fas fa-trash-alt"></i>
+                            <span class="tooltiptext">清空内容</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="editor-container">
+                    <div class="line-numbers" id="lineNumbers"></div>
+                    <textarea
+                        id="editor"
+                        class="focus:outline-none focus:ring-1 focus:ring-blue-500 custom-scrollbar"
+                        placeholder="在这里输入 Markdown 内容..."
+                    ></textarea>
+                </div>
+            </div>
+
+            <!-- 预览区 -->
+            <div class="bg-white rounded shadow-lg p-2 flex flex-col min-h-[50vh] md:min-h-0">
+                <div class="md-toolbar">
+                    <h2 class="text-base font-semibold text-gray-700">预览区</h2>
+                    <div class="toolbar-group ml-auto">
+                        <button id="copyHtmlBtn" class="px-2.5 py-1 bg-blue-500 text-white text-xs rounded hover:bg-blue-600 transition-colors flex items-center">
+                            <i class="fas fa-copy mr-1"></i>
+                            复制
+                        </button>
+                        <button id="generateImageBtn" class="px-2.5 py-1 bg-green-500 text-white text-xs rounded hover:bg-green-600 transition-colors flex items-center">
+                            <i class="fas fa-image mr-2"></i>生成图片
+                        </button>
+                        <button onclick="showSettings()" class="px-2.5 py-1 bg-blue-500 text-white text-xs rounded hover:bg-blue-600 transition-colors flex items-center">
+                            <i class="fas fa-cog mr-1"></i>
+                            设置
+                        </button>
+                    </div>
+                </div>
+                <div id="preview" class="markdown-preview flex-1 overflow-auto p-2 border rounded custom-scrollbar">
+                </div>
+            </div>
+        </div>
+    </div>
+<script src="scripts/main.js"></script>
+</body>
+</html>
