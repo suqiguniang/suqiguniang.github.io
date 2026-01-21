@@ -9,7 +9,7 @@ description: '苏柒姑娘的hexo站点,使用butterfly主题'
 keywords:
 author: 苏柒姑娘
 language: zh-CN
-timezone: ''
+timezone: Asia/Shanghai
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
