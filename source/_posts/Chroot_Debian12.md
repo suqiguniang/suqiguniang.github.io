@@ -5,7 +5,7 @@ tags:
 ---
 
 #分享一个好东西，[Chroot_Debian12](https://share.fnnas.net/s/d1936c52b2ed441396)
-一个手机模块，基于Chroot的debian12系统，root密码root，magisk刷入即可使用
+一个手机magisk模块，基于Chroot的debian12系统，root密码root，magisk刷入即可使用
 ```shell
 apt update && apt install -y git curl wget nginx 
 
